@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package rokid.inner;
+
+service TtsService {
+  rpc tts(TtsRequest) returns (stream TtsResponse) { }
+}
+
+message TtsRequest {
+    TtsHeader header        = 1;
+    string text             = 2;
+}
+
+message TtsHeader {
+    int32 id                = 1;
+    string declaimer        = 2;
+    string codec            = 3;
+    string params           = 4;
+    uint32 sample_rate      = 5;
+}
+
+message TtsResponse {
+    string text             = 1;
+    bytes voice             = 2;
+}

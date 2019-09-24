@@ -1,0 +1,656 @@
+syntax = "proto3";
+
+option java_package = "com.rokid.account";
+
+package rokid.inner.v1.rokidAccount;
+
+service RokidAccount {
+
+  //开启儿童模式
+  rpc EnableChildModel (EnableChildModelRequest) returns (EnableChildModelResponse) {
+  }
+  //关闭儿童模式
+  rpc DisableChildModel (DisableChildModelRequest) returns (DisableChildModelResponse) {
+  }
+  //根据设备获得用户配置的儿童模式状态
+  rpc GetChildModelTypeByDevice (GetChildModelTypeByDeviceRequest) returns (GetChildModelTypeByDeviceResponse) {
+  }
+
+  //配置用户和设备自定义唤醒配置
+  rpc SetUserCustomConfig (SetUserCustomConfigRequest) returns (SetUserCustomConfigResponse) {
+  }
+
+  //保存用户和设备自定义唤醒配置
+  rpc SaveUserWakeupInfo (SaveUserWakeupInfoRequest) returns (SaveUserWakeupInfoResponse) {
+  }
+
+  //设备端 获得用户和设备自定义配置
+  rpc GetUserCustomConfigByDevice (GetUserCustomConfigByDeviceRequest) returns (GetUserCustomConfigByDeviceResponse) {
+  }
+
+  //app端 获得用户和设备自定义配置
+  rpc GetUserCustomConfigByUser (GetUserCustomConfigByUserRequest) returns (GetUserCustomConfigByUserResponse) {
+  }
+
+  //APP端 删除用户和设备自定义唤醒配置
+  rpc DeleteUserWakeupConfig (DeleteUserWakeupConfigRequest) returns (DeleteUserWakeupConfigResponse) {
+  }
+
+  //根据clientId获得clientId相关信息
+  rpc GetClientInfoByClientId (GetClientInfoByClientIdRequest) returns (GetClientInfoByClientIdResponse){
+  }
+
+  //创建client信息
+  rpc CreateClientInfo (CreateClientInfoRequest) returns (CreateClientInfoResponse){
+  }
+
+  //根据accountId获得当前accountId配置的clientId信息
+  rpc GetClientInfoByAccountId (GetClientInfoByAccountIdRequest) returns (GetClientInfoByAccountIdResponse){
+  }
+
+  //根据source获得authSite信息
+  rpc GetAuthSiteKeyBySource(GetAuthSiteKeyBySourceRequest) returns (GetAuthSiteKeyBySourceResponse){
+  }
+
+  rpc UpdatePassWord (UpdatePassWordRequest) returns (UpdatePassWordResponse){
+  }
+
+  rpc GetL2ExtraInfoByNamespace (GetL2ExtraInfoByNamespaceRequest) returns (GetL2ExtraInfoByNamespaceResponse){}
+
+  rpc SaveL2ExtraInfoByNamespace (SaveL2ExtraInfoByNamespaceRequest) returns (SaveL2ExtraInfoByNamespaceResponse){}
+
+  //根据token获得token对应的clientId的信息
+  rpc GetClientInfoByToken (GetClientInfoByTokenRequest) returns (GetClientInfoByTokenResponse){
+  }
+  rpc GetAccountByThirdId (GetAccountByThirdIdRequest) returns (GetAccountByThirdIdResponse){
+  }
+
+  rpc SaveExtraByThird(SaveExtraByThirdRequest) returns (SaveExtraByThirdResponse){
+  }
+
+  //绑定第三方id
+  rpc BindThirdId (BindThirdIdRequest) returns (BindThirdIdResponse){
+  }
+
+  rpc UpdatePassWordV2 (UpdatePassWordRequest) returns (UpdatePassWordResponse){
+  }
+
+  //根据微信openId获取用户信息
+  rpc GetUserInfoByOpenId (GetUserInfoByOpenIdRequest) returns (GetUserInfoByOpenIdResponse){
+  }
+
+  //绑定微信公众号信息
+  rpc BindWxOfficialAccount (BindWxOfficialAccountRequest) returns (BindWxOfficialAccountResponse){
+  }
+}
+
+// 状态返回信息
+message StatusResponse {
+
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+}
+
+message EnableChildModelRequest {
+  string userId = 1;
+
+  string deviceTypeId = 2;
+
+  string deviceId = 3;
+}
+
+message EnableChildModelResponse {
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+}
+
+message DisableChildModelRequest {
+  string userId = 1;
+
+  string deviceTypeId = 2;
+
+  string deviceId = 3;
+}
+
+message DisableChildModelResponse {
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+}
+
+message GetChildModelTypeByDeviceRequest {
+  string userId = 1;
+
+  string deviceTypeId = 2;
+
+  string deviceId = 3;
+}
+
+message GetChildModelTypeByDeviceResponse {
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  //儿童模式状态 0：开启，1：关闭 空：没有配置
+  string status = 4;
+}
+
+//配置用户 唤醒配置
+message SetUserCustomConfigRequest {
+
+  //账户id
+  string userId = 1;
+
+  //设备类型id
+  string deviceTypeId = 2;
+
+  //设备id
+  string deviceId = 3;
+
+  //wakeupSoundEffects
+  string type = 4;
+
+  //0 默认应答  1 无声仅灯光 2自定义   例：{"type":"0"}
+  string value = 5;
+
+}
+
+//配置用户 response
+message SetUserCustomConfigResponse {
+
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+}
+
+message SaveUserWakeupInfoRequest {
+
+  //账户id
+  string userId = 1;
+
+  //设备类型id
+  string deviceTypeId = 2;
+
+  //设备id
+  string deviceId = 3;
+
+  WakeupInfo wakeupInfo = 4;
+}
+
+message SaveUserWakeupInfoResponse {
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  //自定义唤醒id
+  string wakeupId = 4;
+}
+
+
+// 自定义唤醒配置info
+message WakeupInfo {
+
+  //自定义唤醒id
+  string wakeupId = 1;
+
+  //自定义唤醒url
+  string wakeupUrl = 2;
+
+  //自定义唤醒别名
+  string wakeupName = 3;
+
+  string mdVersion = 4;
+
+  //声纹id，可以为空
+  string voiceId = 5;
+}
+
+//配置用户 唤醒配置 0 默认应答  1 无声仅灯光 2自定义
+message GetUserCustomConfigByDeviceRequest {
+
+  //账户id
+  string userId = 1;
+
+  //设备类型id
+  string deviceTypeId = 2;
+
+  //设备id
+  string deviceId = 3;
+}
+
+message GetUserCustomConfigByDeviceResponse {
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  //配置的集合
+  map<string,string> values = 4;
+}
+
+message GetUserCustomConfigByUserRequest {
+
+  //账户id
+  string userId = 1;
+
+  //设备类型id
+  string deviceTypeId = 2;
+
+  //设备id
+  string deviceId = 3;
+
+  //声纹账户id
+  string voiceId = 4;
+}
+
+message GetUserCustomConfigByUserResponse {
+
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  //配置的集合
+  map<string,string> values = 4;
+}
+
+message DeleteUserWakeupConfigRequest {
+
+  //账户id
+  string userId = 1;
+
+  //自定义配置id
+  string wakeupId = 5;
+}
+
+message DeleteUserWakeupConfigResponse {
+
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+}
+
+// 账户信息
+message AccountInfo {
+
+  // 账户ID
+  string accountId = 1;
+
+  // 老账户Id
+  string userId = 2;
+
+  // 手机号码所属国家区域编号
+  string regionCode = 3;
+
+  // 手机号码
+  string mobile = 4;
+
+  // 邮箱地址
+  string email = 5;
+
+  // 账户类别
+  EnumAccountType accountType = 6;
+
+  // 提交认证状态
+  EnumSubmitSatus accountStatus = 7;
+
+  // 用户名
+  string userName = 8;
+
+  // 头像信息
+  string headIcon = 9;
+
+  //第三方账户id
+  string thirdId = 10;
+
+  //账户来源
+  string source = 11;
+
+  //账户来源
+  string sourceName = 12;
+
+  //账户创建时间
+  int64 createTime = 13;
+
+}
+
+// 账户类型
+enum EnumAccountType {
+
+  // 未认证
+  UNKNOWN = 0;
+
+  // 个人
+  PERSONAL = 1;
+
+  // 企业
+  ENTERPRISE = 2;
+}
+
+// 提交认证状态
+enum EnumSubmitSatus {
+  // 未提交
+  UNSUBMIT = 0;
+
+  // 已提交
+  SUBMITED = 1;
+}
+
+message GetAccountByThirdIdRequest{
+
+  string thirdId = 1;
+
+  string source = 2;
+
+  string accessKey = 3;
+}
+
+message GetAccountByThirdIdResponse{
+
+  AccountInfo accountInfo = 1;
+
+  // 是否成功
+  bool success = 2;
+
+  // 返回码
+  string code = 3;
+
+  // 返回信息
+  string msg = 4;
+
+  string extraInfo = 5;
+}
+
+message SaveExtraByThirdRequest{
+  string thirdId = 1;
+
+  string source = 2;
+
+  string accessKey = 3;
+
+  string extraInfo = 4;
+}
+
+message SaveExtraByThirdResponse{
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+}
+
+message GetClientInfoByClientIdRequest{
+
+  string clientId = 1;
+}
+
+message GetClientInfoByClientIdResponse{
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  ClientInfo clientInfo = 4;
+}
+
+message ClientInfo{
+  string clientId = 1;
+
+  string clientSecret = 2;
+
+  string accessKey = 3;
+
+  string accountId = 4;
+}
+message CreateClientInfoRequest{
+
+  //账户id
+  string userId = 1;
+
+  //客户名称
+  string clientName = 2;
+
+  //厂商类型:0-普通厂商 1-IOT厂商
+  string type = 3;
+
+}
+
+message CreateClientInfoResponse{
+
+  // 处理结果
+  StatusResponse resultStatus = 1;
+}
+
+message GetClientInfoByAccountIdRequest{
+  string userId = 1;
+}
+
+message GetClientInfoByAccountIdResponse{
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  repeated ClientInfo clientInfos = 4;
+}
+
+message GetAuthSiteKeyBySourceRequest{
+  string source = 1;
+}
+
+message GetAuthSiteKeyBySourceResponse{
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  AuthSiteKeyInfo authSiteKeyInfo = 4;
+}
+
+message AuthSiteKeyInfo{
+  string accessKey = 1;
+  string key_name = 2;
+  string comment = 3;
+  string companyId = 4;
+  string type = 5;
+}
+
+message UpdatePassWordRequest{
+  //账户id
+  string userId = 1;
+  //旧的账户名密码
+  string oldPassword = 2;
+  //新的password
+  string newPassword = 3;
+}
+
+message UpdatePassWordResponse{
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+}
+
+message GetL2ExtraInfoByNamespaceRequest{
+
+  string userId = 1;
+  string namespace = 2;
+}
+
+message GetL2ExtraInfoByNamespaceResponse{
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  string infos = 4;
+}
+
+message SaveL2ExtraInfoByNamespaceRequest{
+  string userId = 1;
+  string namespace = 2;
+  string info = 3;
+}
+
+message SaveL2ExtraInfoByNamespaceResponse{
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+}
+
+message GetClientInfoByTokenRequest{
+  string token = 1;
+}
+
+message GetClientInfoByTokenResponse{
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  ClientInfo clientInfos = 4;
+}
+
+message BindThirdIdRequest{
+  string clientId = 1;
+  string source = 2;
+  string thirdId = 3;
+}
+
+message BindThirdIdResponse{
+
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  string userId = 4;
+}
+
+message GetUserInfoByOpenIdRequest{
+
+  // 微信openId
+  string openId = 1;
+
+  // 微信公众号appId
+  string appId = 2;
+
+}
+
+message GetUserInfoByOpenIdResponse{
+
+  //用户手机号
+  string phone_num = 1;
+
+  //用户id
+  string userId = 2;
+
+  // 状态信息
+  StatusResponse statusInfo = 3;
+
+}
+
+message BindWxOfficialAccountRequest{
+
+  // 微信openId
+  string openId = 1;
+
+  // 微信unionId
+  string unionId = 2;
+
+  // userId
+  string userId = 3;
+
+  // appId
+  string appId = 4;
+
+}
+
+message BindWxOfficialAccountResponse{
+
+  // 状态信息
+  StatusResponse statusInfo = 1;
+
+}

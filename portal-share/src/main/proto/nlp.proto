@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+import "asrmsg.proto";
+
+option java_package = "com.rokid.open.nlp.facade";
+
+package rokid.inner;
+
+service NLPService {
+
+    rpc serviceCall (serviceCallRequest) returns (serviceCallResponse) {
+    }
+}
+
+
+message serviceCallRequest {
+    string accountId = 1;
+    string deviceTypeId = 2;
+    string deviceId = 3;
+    string sentence = 4;
+    string stack = 5;
+    string device = 6;
+    string vt = 7;
+    string activeUserId = 8;
+    repeated common.asr.AsrMsg asrMsg = 9; //asr返回的拼音等数据
+}
+
+message serviceCallResponse {
+    string nlp = 1;
+    string service = 2;
+}

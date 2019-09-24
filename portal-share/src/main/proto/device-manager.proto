@@ -1,0 +1,662 @@
+syntax = "proto3";
+
+option java_package = "com.rokid.open.devicemanager.facade";
+
+package rokid.inner.v1.device;
+
+service DeviceManager {
+    rpc GetLocation (GetLocationRequest) returns (GetLocationResponse) {
+    }
+    rpc BindMaster (BindMasterRequest) returns (BindMasterResponse) {
+    }
+    rpc getDeviceMaster (GetDeviceMasterRequest) returns (GetDeviceMasterResponse) {
+    }
+    rpc PushNotificationToMaster (PushNotificationToMasterRequest) returns (PushNotificationToMasterResponse) {
+    }
+    rpc getDeviceList (GetDeviceListRequest) returns (GetDeviceListResponse) {
+    }
+    rpc GetDeviceTypeInfo (GetDeviceTypeInfoRequest) returns (GetDeviceTypeInfoResponse) {
+    }
+    rpc AddOrUpdateDeviceTypeInfo (AddOrUpdateDeviceTypeInfoRequest) returns (AddOrUpdateDeviceTypeInfoResponse) {
+    }
+
+    rpc DelDeviceTypeInfo (DelDeviceTypeInfoRequest) returns (DelDeviceTypeInfoResponse) {
+    }
+    rpc GetDeviceInfo (GetDeviceInfoRequest) returns (GetDeviceInfoResponse) {
+    }
+    rpc GetDeviceInfoByNamespace (GetDeviceInfoByNamespaceRequest) returns (GetDeviceInfoByNamespaceResponse) {
+    }
+    rpc AddOrUpdateDeviceInfo (AddOrUpdateDeviceInfoRequest) returns (AddOrUpdateDeviceInfoResponse) {
+    }
+    rpc DelDeviceInfo (DelDeviceInfoRequest) returns (DelDeviceInfoResponse) {
+    }
+    rpc AddOrUpdateDeviceTypeHotwords (AddOrUpdateDeviceTypeHotwordsRequest) returns (AddOrUpdateDeviceTypeHotwordsReponse) {
+    }
+    rpc GetDeviceTypeHotwords (GetDeviceTypeHotwordsRequest) returns (GetDeviceTypeHotwordsReponse) {
+    }
+    rpc DelDeviceTypeHotwords (DelDeviceTypeHotwordsRequest) returns (DelDeviceTypeHotwordsReponse) {
+    }
+    rpc AddDeviceTypeRefSkillSlot (AddDeviceTypeRefSkillSlotRequest) returns (AddDeviceTypeRefSkillSlotReponse) {
+    }
+    rpc DelDeviceTypeRefSkillSlot (DelDeviceTypeRefSkillSlotRequest) returns (DelDeviceTypeRefSkillSlotReponse) {
+    }
+    rpc GetDeviceTypeRefSkillSlot (GetDeviceTypeRefSkillSlotRequest) returns (GetDeviceTypeRefSkillSlotReponse) {
+    }
+    rpc GetDeviceTypeGrammarsAndHotwords (GetDeviceTypeGrammarsAndHotwordsRequest) returns (GetDeviceTypeGrammarsAndHotwordsResponse) {
+    }
+    rpc AddDeviceHotwords (AddDeviceHotwordsRequest) returns (AddDeviceHotwordsResponse) {
+    }
+    rpc DelDeviceHotwords (DelDeviceHotwordsRequest) returns (DelDeviceHotwordsResponse) {
+    }
+
+    rpc UnBindMaster(UnBindMasterRequest) returns (UnBindMasterResponse){
+    }
+
+    rpc AddRokid (AddRokidRequest) returns (AddRokidResponse){
+    }
+
+    rpc BindMasterByToken (BindMasterByTokenRequest) returns (BindMasterByTokenResponse) {
+    }
+
+    rpc UnBindMasterByToken(UnBindMasterByTokenRequest) returns (UnBindMasterByTokenResponse){
+    }
+
+    rpc GetDeviceMasterGw (GetDeviceMasterGwRequest) returns (GetDeviceMasterGwResponse) {
+    }
+
+    rpc GetDeviceListGw (GetDeviceListGwRequest) returns (GetDeviceListGwResponse) {
+    }
+
+    rpc ResetRoki (ResetRokiRequest) returns (ResetRokiResponse){
+    }
+
+    rpc GetDeviceListInfoByMaster(GetDeviceListInfoByMasterRequest) returns (GetDeviceListInfoByMasterResponse){
+    }
+
+    rpc AddOrUpdateDeviceBasicInfo (AddOrUpdateDeviceBasicInfoRequest) returns (AddOrUpdateDeviceBasicInfoResponse) {
+    }
+
+    rpc SaveDeviceBasicInfoOta (SaveDeviceBasicInfoOtaRequest) returns (SaveDeviceBasicInfoOtaResponse) {
+    }
+
+    //根据mac地址 获得设备信息
+    rpc GetDeviceListByMac (GetDeviceListByMacRequest) returns (GetDeviceListByMacResponse){
+    }
+
+    //根据设备mac地址 绑定账号和设备信息
+    rpc BindMasterByMac(BindMasterByMacRequest)returns (BindMasterByMacResponse){
+    }
+
+    rpc UnBindMasterByMac(UnBindMasterByMacRequest)returns (UnBindMasterByMacResponse){
+    }
+
+    rpc GetDeviceTypeTtsInfo (GetDeviceTypeTtsInfoRequest) returns (GetDeviceTypeTtsInfoResponse) {
+    }
+    rpc AddDeviceTypeTtsInfo (AddDeviceTypeTtsInfoRequest) returns (AddDeviceTypeTtsInfoResponse) {
+    }
+
+    rpc CheckActiveWord(CheckActiveWordRequest) returns (CheckActiveWordResponse){}
+
+    //切换设备类型接口
+    rpc UpdateDeviceTypeId (UpdateDeviceTypeIdRequest) returns (UpdateDeviceTypeIdResponse){
+    }
+
+
+    // 查询设备信息
+    rpc QueryDeviceList (QueryDeviceListRequest) returns (QueryDeviceListResponse) {
+    }
+}
+
+message QueryDeviceListRequest {
+
+    // deviceId
+    string deviceId = 1;
+
+    // userId
+    string userId = 2;
+
+    repeated string deviceType = 3;
+
+    PageModel pageModel = 4;
+
+}
+
+
+message QueryDeviceInfoOutput {
+
+    //  userId
+    string userId = 1;
+
+    //  deviceTypeId
+    string deviceTypeId = 2;
+
+    //  deviceId
+    string deviceId = 3;
+
+    //激活时间
+    string gmtActive = 4;
+
+}
+
+message QueryDeviceListResponse {
+
+    repeated QueryDeviceInfoOutput QueryDeviceInfoOutput = 1;
+
+    int32 resultCode = 2;
+
+    string message = 3;
+
+    PageModel pageModel = 4;
+
+
+}
+
+message PageModel{
+    int32 pageNum = 1;
+    int32 pageSize = 2;
+    int64 total = 3;
+    int32 pages = 4;
+}
+
+message GetLocationRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+}
+
+message GetLocationResponse {
+    map<string, string> locationInfo = 1;
+    int32 resultCode = 2;
+    string message = 3;
+}
+
+message PushNotificationToMasterRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    string message = 3;
+    string extra = 4;
+}
+
+message PushNotificationToMasterResponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message AddOrUpdateDeviceTypeHotwordsRequest {
+    string deviceTypeId = 1;
+    string groupId = 2;
+    string groupName = 3;
+    repeated string values = 4;
+}
+
+message AddOrUpdateDeviceTypeHotwordsReponse {
+    int32 resultCode = 1;
+    string message = 2;
+    string groupId = 3;
+}
+
+message GetDeviceTypeHotwordsRequest {
+    string deviceTypeId = 1;
+    string groupId = 2;
+    string currentSkillId = 3;
+}
+
+message GetDeviceTypeHotwordsReponse {
+    int32 resultCode = 1;
+    string message = 2;
+    repeated DeviceTypeHotwords deviceTypeHotwords = 3;
+}
+
+message DeviceTypeHotwords {
+    string groupId = 1;
+    string groupName = 2;
+    repeated string values = 3;
+    map<string, SlotNames> refSkillSlot = 4;
+}
+
+message SlotNames {
+    repeated string name = 1;
+}
+
+message AddDeviceTypeRefSkillSlotRequest {
+    string deviceTypeId = 1;
+    string groupId = 2;
+    string skillId = 3;
+    string slotName = 4;
+}
+
+message AddDeviceTypeRefSkillSlotReponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message GetDeviceTypeRefSkillSlotRequest {
+    string deviceTypeId = 1;
+}
+
+message GetDeviceTypeRefSkillSlotReponse {
+    int32 resultCode = 1;
+    string message = 2;
+    repeated DeviceTypeRefSkillSlot deviceTypeRefSkillSlot = 3;
+}
+
+message DeviceTypeRefSkillSlot {
+    string groupId = 1;
+    string groupName = 2;
+    map<string, SlotNames> refSkillSlot = 3;
+}
+
+message DelDeviceTypeHotwordsRequest {
+    string deviceTypeId = 1;
+    string groupId = 2;
+}
+
+message DelDeviceTypeHotwordsReponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message DelDeviceTypeRefSkillSlotRequest {
+    string deviceTypeId = 1;
+    string groupId = 2;
+    string skillId = 3;
+    string slotName = 4;
+}
+
+message DelDeviceTypeRefSkillSlotReponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message GetDeviceMasterRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+}
+
+message GetDeviceMasterResponse {
+    string userId = 1;
+
+    int32 resultCode = 2;
+    string message = 3;
+}
+
+message GetDeviceListRequest {
+    string userId = 1;
+}
+
+message GetDeviceListResponse {
+    repeated Device device = 1;
+
+    int32 resultCode = 2;
+    string message = 3;
+}
+
+message Device {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+
+    string mac = 3;
+}
+
+message GetDeviceTypeInfoRequest {
+    string deviceTypeId = 1;
+    string namespace = 2;
+
+}
+
+message GetDeviceTypeInfoResponse {
+    map<string, string> values = 1;
+    int32 resultCode = 2;
+    string message = 3;
+}
+
+message GetDeviceTypeTtsInfoRequest {
+    string deviceTypeId = 1;
+}
+
+message GetDeviceTypeTtsInfoResponse {
+    string value = 1;
+    int32 resultCode = 2;
+    string message = 3;
+}
+message AddOrUpdateDeviceTypeInfoRequest {
+    string deviceTypeId = 1;
+    string namespace = 2;
+    map<string, string> values = 3;
+}
+
+message AddOrUpdateDeviceTypeInfoResponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message AddDeviceTypeTtsInfoRequest{
+    string deviceTypeId = 1;
+    string value = 2;
+}
+
+message AddDeviceTypeTtsInfoResponse{
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message DelDeviceTypeInfoRequest {
+    string deviceTypeId = 1;
+    string namespace = 2;
+    string key = 3;
+}
+
+message DelDeviceTypeInfoResponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message GetDeviceTypeGrammarsAndHotwordsRequest {
+    string deviceTypeId = 1;
+    repeated string skillId = 2;
+}
+
+message GetDeviceTypeGrammarsAndHotwordsResponse {
+    int32 resultCode = 1;
+    string message = 2;
+    repeated string grammars = 3;
+    repeated Hotwords hotwords = 4;
+}
+// reference to skill slot is grammar, just to speech
+message Hotwords {
+    string skillId = 1;
+    repeated string slotName = 2;
+    repeated string values = 3;
+}
+
+message GetDeviceInfoRequest {
+    Device device = 1;
+    string namespace = 2;
+
+}
+
+message GetDeviceInfoResponse {
+    map<string, string> values = 1;
+    int32 resultCode = 2;
+    string message = 3;
+}
+
+message GetDeviceInfoByNamespaceRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    string namespace = 3;
+
+}
+
+message GetDeviceInfoByNamespaceResponse {
+    map<string, string> values = 1;
+    int32 resultCode = 2;
+    string message = 3;
+}
+
+message AddOrUpdateDeviceInfoRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    string namespace = 3;
+    map<string, string> values = 4;
+}
+
+message AddOrUpdateDeviceInfoResponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message DelDeviceInfoRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    string namespace = 3;
+    string key = 4;
+}
+
+message DelDeviceInfoResponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+message BindMasterRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    string userId = 3;
+}
+
+message BindMasterResponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message AddDeviceHotwordsRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    string domain = 3;
+    string slot = 4;
+    repeated string hotword = 5;
+}
+
+message AddDeviceHotwordsResponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message DelDeviceHotwordsRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    string domain = 3;
+    string slot = 4;
+}
+
+message DelDeviceHotwordsResponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message UnBindMasterRequest{
+
+    string userId = 1;
+
+    string deviceId = 2;
+
+    string deviceTypeId = 3;
+
+}
+
+message UnBindMasterResponse{
+
+    int32 resultCode = 1;
+
+    string message = 2;
+}
+
+message AddRokidRequest{
+    string rokiId = 1;
+
+    string uuid = 2;
+
+    string secret = 3;
+
+    string deviceTypeID = 5;
+
+    string source = 6;
+}
+
+message AddRokidResponse{
+    int32 resultCode = 1;
+
+    string message = 2;
+}
+
+message BindMasterByTokenRequest{
+
+    string token = 1;
+
+    string deviceId = 2;
+
+    string deviceTypeId = 3;
+}
+
+message BindMasterByTokenResponse{
+
+    int32 resultCode = 1;
+
+    string message = 2;
+}
+
+message UnBindMasterByTokenRequest{
+
+    string token = 1;
+
+    string deviceId = 2;
+
+    string deviceTypeId = 3;
+
+}
+
+message UnBindMasterByTokenResponse{
+
+    int32 resultCode = 1;
+
+    string message = 2;
+}
+
+message GetDeviceMasterGwRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+}
+
+message GetDeviceMasterGwResponse {
+    string userId = 1;
+    int32 resultCode = 2;
+    string message = 3;
+}
+
+message GetDeviceListGwRequest {
+    string userId = 1;
+}
+
+message GetDeviceListGwResponse {
+    repeated Device device = 1;
+    int32 resultCode = 2;
+    string message = 3;
+}
+
+message ResetRokiRequest{
+    string deviceTypeId = 1;
+    string deviceId = 2;
+}
+
+message ResetRokiResponse{
+
+    int32 resultCode = 1;
+
+    string message = 2;
+}
+
+message GetDeviceListInfoByMasterRequest{
+    string userId = 1;
+
+    string namespace = 2;
+}
+
+message GetDeviceListInfoByMasterResponse{
+
+    repeated DeviceListInfo deviceInfo = 1;
+
+    int32 resultCode = 2;
+
+    string message = 3;
+}
+
+message DeviceListInfo{
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    string infos = 3;
+}
+
+message AddOrUpdateDeviceBasicInfoRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    map<string, string> values = 3;
+}
+
+message AddOrUpdateDeviceBasicInfoResponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message SaveDeviceBasicInfoOtaRequest {
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    string ota = 3;
+}
+
+message SaveDeviceBasicInfoOtaResponse {
+    int32 resultCode = 1;
+    string message = 2;
+}
+
+message GetDeviceListByMacRequest{
+    string deviceTypeId = 1;
+
+    string mac = 2;
+}
+
+message GetDeviceListByMacResponse{
+    repeated Device device = 1;
+    int32 resultCode = 2;
+    string message = 3;
+}
+
+message BindMasterByMacRequest{
+    string deviceTypeId = 1;
+
+    string mac = 2;
+
+    string userId = 3;
+}
+
+message BindMasterByMacResponse{
+    int32 resultCode = 1;
+
+    string message = 2;
+}
+
+message UnBindMasterByMacRequest{
+
+    string userId = 1;
+
+    string mac = 2;
+
+    string deviceTypeId = 3;
+}
+
+message UnBindMasterByMacResponse{
+    int32 resultCode = 1;
+
+    string message = 2;
+}
+
+message CheckActiveWordRequest{
+    string activeWord = 1;
+}
+
+message CheckActiveWordResponse{
+    int32 resultCode = 1;
+
+    string message = 2;
+
+    string value = 3;
+}
+
+message UpdateDeviceTypeIdRequest{
+    string deviceTypeId = 1;
+    string deviceId = 2;
+    string newDeviceTypeId = 3;
+}
+
+message UpdateDeviceTypeIdResponse{
+    int32 resultCode = 1;
+
+    string message = 2;
+}

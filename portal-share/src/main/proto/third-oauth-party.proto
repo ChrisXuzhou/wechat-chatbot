@@ -1,0 +1,308 @@
+syntax = "proto3";
+
+option java_package = "com.rokid.thirdoauth";
+
+package rokid.inner.v1.thirdOauthParty;
+
+service ThirdOauthParty {
+
+  //获得用户的token信息
+  rpc GetAccessTokenByDevice (GetAccessTokenByDeviceRequest) returns (GetAccessTokenByDeviceResponse) {
+  }
+
+  //获得厂商配置信息
+  rpc GetThirdOauthInfo (GetThirdOauthInfoRequest) returns (GetThirdOauthInfoResponse) {
+  }
+
+  //获得QQ音乐最后绑定的是QQ还是微信---要下掉，统一切换掉调用thirdoauthparty接口
+  rpc GetQQMusicLastBindType (GetQQMusicLastBindTypeRequest) returns (GetQQMusicLastBindTypeResponse) {
+  }
+
+  //解绑授权关系
+  rpc UnbindThirdAuth (UnbindThirdAuthRequest) returns (UnbindThirdAuthResponse) {
+  }
+
+  // 新增或更新第三方配置
+  rpc AddThirdOauthInfo (AddThirdOauthInfoRequest) returns (AddThirdOauthInfoResponse){
+  }
+
+  //保存token信息接口
+  rpc SaveAccessToken (SaveAccessTokenRequest) returns (SaveAccessTokenResponse){
+  }
+
+  //获得用户所有绑定关系表-根据厂商支持绑定的类型为范围
+  rpc GetThirdAuthBindListByAccount (GetThirdAuthBindListByAccountRequest) returns (GetThirdAuthBindListByAccountResponse){
+  }
+
+  //根据设备id查询当前绑定的token和对应的厂商授权配置信息
+  //针对QQ音乐获取accesstoken时候，type=QQ_MUSIC，此时返回的setting配置，是用户最后一次绑定类型的配置信息。如果用户QQ，微信都没有绑定过，那么setting配置信息返回空
+  rpc GetAccessTokenAndSettingByDevice (GetAccessTokenAndSettingByDeviceRequest) returns (GetAccessTokenAndSettingByDeviceResponse) {
+  }
+
+  //获得微信公众号baseToken
+  rpc GetWxBaseAccessToken (GetWxBaseAccessTokenRequest) returns (GetWxBaseAccessTokenResponse){
+  }
+
+}
+
+message GetAccessTokenByDeviceRequest {
+  //设备类型id
+  string deviceTypeId = 1;
+  //设备id
+  string deviceId = 2;
+  //类型 XMLY QQ、WX、QQ_MUSIC
+  string type = 3;
+  //APP PC
+  string typeSource = 4;
+  //账户id
+  string userId = 5;
+}
+
+message GetAccessTokenByDeviceResponse {
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  //  ThirdAuthInfo thirdAuthInfo = 4;
+  string infos = 4;
+}
+
+message GetThirdOauthInfoRequest {
+  //设备类型id
+  string deviceType = 1;
+  //类型 XMLY QQ、WX
+  string type = 2;
+  //APP PC
+  string typeSource = 3;
+
+  //配置信息对应skill的依赖信息 可以为空
+  string skillId = 4;
+}
+
+message GetThirdOauthInfoResponse {
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  ThirdOauthInfo thirdOauthInfo = 4;
+}
+
+message ThirdOauthInfo {
+  //第三方互联 appId
+  string baseAppId = 1;
+  //第三方互联APPsecret
+  string baseAppSecret = 2;
+  //QQ 、WX、XMLY
+  string type = 3;
+  //APP PC
+  string typeSource = 4;
+  //重定向url
+  string baseRedirectUri = 5;
+
+  //授权成功后回调厂商url
+  string callbackThirdUrl = 6;
+
+  //其他额外配置 json字符串：比如喜马拉雅skill依赖code配置，叮当依赖叮当分配的appId和APPsecret
+  //比如喜马拉雅 这里返回的是{"vendor_code":"0"}
+  //叮当音乐 这里返回的是{"appId":"","appSecret":""}
+  string otherConfig = 7;
+}
+
+message AddThirdOauthInfoRequest {
+  //设备类型id
+  string deviceType = 1;
+  //类型 XMLY QQ、WX
+  string type = 2;
+  //APP PC
+  string typeSource = 3;
+  // appId
+  string basicAppId = 4;
+  // appSecret
+  string basicAppSecret =5;
+  // 企业sdk回调地址
+  string callbackThirdUrl = 6;
+  // skillId
+  string skillId = 7;
+  // vendorCode ：高级功能
+  // appId ：除去登录的开发平台外,技能需要使用的appId
+  // appSecret：除去登录的开发平台外,技能需要使用的appSecret
+  // useType 公版 1, sdk 2
+  //      { vendor_code, appId, appSecret, useType}
+  string otherConfig = 8;
+}
+
+message AddThirdOauthInfoResponse {
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+}
+
+message GetQQMusicLastBindTypeRequest {
+  string userId = 1;
+
+  string deviceTypeId = 2;
+}
+
+message GetQQMusicLastBindTypeResponse {
+
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  string lastBindypeType = 4;
+}
+
+message UnbindThirdAuthRequest {
+
+  string userId = 1;
+
+  string deviceTypeId = 2;
+  //类型 XMLY QQ、WX
+  string type = 3;
+  //APP  PC
+  string source = 4;
+}
+
+message UnbindThirdAuthResponse {
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+}
+
+message SaveAccessTokenRequest{
+  //账户masterid
+  string userId = 1;
+  //设备类型id
+  string deviceTypeId = 2;
+  //设备id
+  string deviceId = 3;
+  //类型 XMLY QQ、WX
+  string type = 4;
+  //APP  PC
+  string source = 5;
+  //token信息
+  string info = 6;
+}
+
+message SaveAccessTokenResponse{
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+}
+
+message GetThirdAuthBindListByAccountRequest{
+  //账户id
+  string userId = 1;
+  //设备类型id
+  string deviceTypeId = 2;
+  //APP  PC
+  string source = 3;
+}
+
+message GetThirdAuthBindListByAccountResponse{
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  //绑定关系集合信息
+  repeated ThirdAuthBindInfo thirdAuthBindInfo = 4;
+}
+
+message ThirdAuthBindInfo{
+  //类型
+  string type = 1;
+
+  //状态 0：未绑定 1：绑定
+  int32 status = 2;
+}
+
+message GetAccessTokenAndSettingByDeviceRequest {
+  //设备类型id
+  string deviceTypeId = 1;
+  //设备id
+  string deviceId = 2;
+  //类型 XMLY QQ、WX、QQ_MUSIC
+  string type = 3;
+  //APP PC
+  string typeSource = 4;
+  //账户id
+  string userId = 5;
+
+  string skillId = 6;
+}
+
+message GetAccessTokenAndSettingByDeviceResponse {
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  //  ThirdAuthInfo thirdAuthInfo = 4;
+  string infos = 4;
+
+  //对应配置信息
+  ThirdOauthInfo thirdOauthInfo = 5;
+}
+
+message GetWxBaseAccessTokenRequest {
+
+  //微信公众号appId
+  string appId = 1;
+}
+
+message GetWxBaseAccessTokenResponse {
+
+  // 是否成功
+  bool success = 1;
+
+  // 返回码
+  string code = 2;
+
+  // 返回信息
+  string msg = 3;
+
+  // 基础accessToken
+  string accessToken = 4;
+
+}
+
+

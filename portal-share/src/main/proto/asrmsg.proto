@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "com.rokid.inner.message";
+
+package rokid.inner.common.asr;
+
+enum PhoneticismType {
+  CHINESE = 0;
+  ENGLISH = 1;
+}
+
+message AsrMsg {
+  PhoneticismType type = 1;
+  string phoneticism = 2;
+  string word = 3;
+}
